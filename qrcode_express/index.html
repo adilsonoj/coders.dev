@@ -10,8 +10,10 @@
             width: 100%;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .css-input {
@@ -24,11 +26,45 @@
             border-style: solid;
             border-radius: 9px;
             box-shadow: 0px 0px 5px rgba(129, 13, 188, .75);
-            text-shadow: -50px 0px 0px rgba(66, 66, 66, .75);
+
         }
 
         .css-input:focus {
             outline: none;
+        }
+
+        .myButton {
+            box-shadow: inset 0px 1px 0px 0px #efdcfb;
+            background: linear-gradient(to bottom, #d19cfc 5%, #bc80ea 100%);
+            background-color: #d19cfc;
+            border-radius: 6px;
+            border: 1px solid #7e0ddb;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 10px 18px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #9752cc;
+        }
+
+        .myButton:hover {
+            background: linear-gradient(to bottom, #bc80ea 5%, #d19cfc 100%);
+            background-color: #bc80ea;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            padding: 10px;
+
         }
     </style>
 </head>
@@ -36,10 +72,21 @@
 <body>
     <div>
         <h1>Entre com texto</h1>
-        <input type="text" class="css-input" />
+        <input type="text" class="css-input" id="texto" />
+        <button onClick="gerar()" class="myButton">GERAR</button>
     </div>
-    <div>
-    </div>
-</body>
 
-</html>
+    <img id="img">
+
+    <script>
+        const gerar = () => {
+            const texto = document.getElementById("texto").value
+            fetch(`qrcode?texto=${texto}`)
+                .then(resp => resp.text())
+                .then(data => {
+                    const imgTag = document.getElementById("img")
+                    imgTag.src = data
+                })
+        }
+    </script>
+</body>
